@@ -2,78 +2,53 @@
 
 #include <map>
 #include <stdexcept>
+#include <regex>
 
 namespace dumbdate {
 
-    int GetDatePlus3DaysStr(const std::string& date, std::string &date_str) {
+    int GetDatePlus3DaysStr(const std::string &date, std::string &date_str) {
 
-        if (date.empty() || date.length() > 5) {
+        // TODO: add other delimiters
+        std::regex regex(R"((\d\d.\d\d))");
+
+        if (!std::regex_match(date, regex)) {
             return NOT_DATE;
         }
 
-        size_t separatorIndex = date.find('.');
+        // TODO: add delimiter check
 
-        if (separatorIndex == -1) {
-            bool isSlash = date.find('/') != -1;
-            bool isDash = date.find('-') != -1;
-            bool isPeriod = date.find('.') != -1;
-            bool isComma = date.find(',') != -1;
-            if (isSlash || isDash || isPeriod || isComma) {
-                return INCORRECT_DELIMITER;
-            }
-            return NOT_DATE;
-        }
-
-        std::string dayString = date.substr(0, separatorIndex);
-        std::string monthString = date.substr(separatorIndex + 1, 2);
-
-        if (dayString.find('+') != dayString.find('-')) {
-            return NOT_DATE;
-        }
-
-        if (monthString.find('+') != monthString.find('-')) {
-            return NOT_DATE;
-        }
+        std::string dayString = date.substr(0, 2);
+        std::string monthString = date.substr(3, 2);
 
         std::size_t pos{};
-        int day;
-        int month;
-        try {
-            day = std::stoi(dayString, &pos, 10);
-            if (pos != 2) {
-                return INCORRECT_FORMAT;
-            }
-            month = std::stoi(monthString, &pos, 10);
-            if (pos != 2) {
-                return INCORRECT_FORMAT;
-            }
-        } catch (std::invalid_argument const& ex) {
-            return NOT_DATE;
-        }
+        int day = std::stoi(dayString, &pos, 10);
+        int month = std::stoi(monthString, &pos, 10);
 
-        std::map<int, int> numbersOfDaysInMonth {
-                {1, 31},
-                {2, 29},
-                {3, 31},
-                {4, 30},
-                {5, 31},
-                {6, 30},
-                {7, 31},
-                {8, 31},
-                {9, 30},
+        // TODO: Make list/vector instead map
+        std::map<int, int> numbersOfDaysInMonth{
+                {1,  31},
+                {2,  29},
+                {3,  31},
+                {4,  30},
+                {5,  31},
+                {6,  30},
+                {7,  31},
+                {8,  31},
+                {9,  30},
                 {10, 31},
                 {11, 30},
                 {12, 31}
         };
 
+        // Validate day and month
         if (month <= 0 || month > 12) {
             return INCORRECT_MONTH;
         }
-
         if (day <= 0 || day > numbersOfDaysInMonth.at(month)) {
             return INCORRECT_DAY;
         }
 
+        // TODO: Make list/vector instead map
         std::map<int, std::string> dayMapping{
                 {1,  "первое"},
                 {2,  "второе"},
@@ -108,6 +83,7 @@ namespace dumbdate {
                 {31, "тридцать первое"}
         };
 
+        // TODO: Make list/vector instead map
         std::map<int, std::string> monthMapping{
                 {1,  "января"},
                 {2,  "февраля"},
