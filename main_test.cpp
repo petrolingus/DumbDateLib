@@ -153,6 +153,10 @@
 //    EXPECT_EQ(code, dumbdate::INCORRECT_DELIMITER);
 //}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// NotDate
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 TEST(NotDate, EmptyString) {
     std::string date;
     std::string date_str;
@@ -188,6 +192,17 @@ TEST(NotDate, DateBetweenRandomText) {
     EXPECT_EQ(code, dumbdate::NOT_DATE);
 }
 
+TEST(NotDate, TwoOrMoreSpacesInDate) {
+    std::string date = "27    04";
+    std::string date_str;
+    int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
+    EXPECT_EQ(code, dumbdate::NOT_DATE);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OK
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 TEST(OK, CorrectDate1) {
     std::string date = "04.04";
     std::string date_str;
@@ -202,4 +217,29 @@ TEST(OK, CorrectDate2) {
     int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
     EXPECT_EQ(date_str, "тридцатое апреля");
     EXPECT_EQ(code, dumbdate::OK);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// INCORRECT_DELIMITER
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+TEST(INCORRECT_DELIMITER, BackslashDelimiter) {
+    std::string date = "27/04";
+    std::string date_str;
+    int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
+    EXPECT_EQ(code, dumbdate::INCORRECT_DELIMITER);
+}
+
+TEST(INCORRECT_DELIMITER, DashDelimiter) {
+    std::string date = "27-04";
+    std::string date_str;
+    int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
+    EXPECT_EQ(code, dumbdate::INCORRECT_DELIMITER);
+}
+
+TEST(INCORRECT_DELIMITER, EmptyDelimiter) {
+    std::string date = "27 04";
+    std::string date_str;
+    int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
+    EXPECT_EQ(code, dumbdate::INCORRECT_DELIMITER);
 }
