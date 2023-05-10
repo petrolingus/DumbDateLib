@@ -1,6 +1,7 @@
 #include "dumb_date.h"
 
 #include <map>
+#include <vector>
 #include <stdexcept>
 #include <regex>
 
@@ -9,13 +10,15 @@ namespace dumbdate {
     int GetDatePlus3DaysStr(const std::string &date, std::string &date_str) {
 
         // TODO: add other delimiters
-        std::regex regex(R"((\d\d.\d\d))");
+        std::regex regex(R"((\d\d[\s\./-]\d\d))");
 
         if (!std::regex_match(date, regex)) {
             return NOT_DATE;
         }
 
-        // TODO: add delimiter check
+        if (date.at(2) == '/' || date.at(2) == '-' || date.at(2) == ' ') {
+            return INCORRECT_DELIMITER;
+        }
 
         std::string dayString = date.substr(0, 2);
         std::string monthString = date.substr(3, 2);
