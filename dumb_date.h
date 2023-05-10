@@ -7,9 +7,9 @@ namespace dumbdate {
 
     const unsigned int OK = 0x00000000; // 0
     const unsigned int NOT_DATE = 0x00000001; // 1
-    const unsigned int INCORRECT_DELIMITER = 0x00000010; // 2
-    const unsigned int INCORRECT_DAY = 0x00000100; // 4
-    const unsigned int INCORRECT_MONTH = 0x00001000; // 8
+    const unsigned int INCORRECT_DELIMITER = 0x00000010; // 16
+    const unsigned int INCORRECT_DAY = 0x00000100; // 256
+    const unsigned int INCORRECT_MONTH = 0x00001000; // 4096
 
     /**
      * Simple function that transforms a date into a text representation, adding three days to it.
