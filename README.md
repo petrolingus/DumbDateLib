@@ -16,3 +16,8 @@ int dumbdate::GetDatePlus3DaysStr(const std::string &date, std::string &date_str
 * `INCORRECT_DAY` - The given day does not exist
 * `INCORRECT_MONTH` - The given month does not exist
 * `INCORRECT_DELIMITER` - The specified separator does not match the format
+
+## Types of Separator
+
+You **cannot** enter a backslash (/), a dash (-), a period (.) or a B (or b), which indicates an empty space, for
+a delimiter character. Only the comma (,) is supported.
