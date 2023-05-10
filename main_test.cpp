@@ -207,7 +207,7 @@ TEST(OK, CorrectDate1) {
     std::string date = "04.04";
     std::string date_str;
     int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
-    EXPECT_EQ(date_str, "седьмое апреля");
+    EXPECT_EQ(date_str, u8"седьмое апреля");
     EXPECT_EQ(code, dumbdate::OK);
 }
 
@@ -215,7 +215,7 @@ TEST(OK, CorrectDate2) {
     std::string date = "27.04";
     std::string date_str;
     int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
-    EXPECT_EQ(date_str, "тридцатое апреля");
+    EXPECT_EQ(date_str, u8"тридцатое апреля");
     EXPECT_EQ(code, dumbdate::OK);
 }
 
@@ -223,7 +223,7 @@ TEST(OK, CorrectDate3) {
     std::string date = "29.02";
     std::string date_str;
     int code = dumbdate::GetDatePlus3DaysStr(date, date_str);
-    EXPECT_EQ(date_str, "третье марта");
+    EXPECT_EQ(date_str, u8"третье марта");
     EXPECT_EQ(code, dumbdate::OK);
 }
 
